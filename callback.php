@@ -1,13 +1,13 @@
 <?php
 /*
-    PB Project Demo - LINEBOT
-    :license MPL 2.0
-    (c) 2020 SuperSonic(https://github.com/supersonictw)
-*/
+PB Project Demo - LINEBOT
+:license MPL 2.0
+(c) 2020 SuperSonic(https://github.com/supersonictw)
+ */
 
-require_once('api/api.php');
-
-include('set.php');
+require_once 'api/api.php';
+require_once 'func.php';
+include 'set.php';
 
 $client = new LINEAPI($channelAccessToken, $channelSecret);
 $msgobj = new LINEMSG();
@@ -28,4 +28,5 @@ foreach ($client->parseEvents() as $event) {
             error_log("Unsupporeted event type: " . $event['type']);
             break;
     }
-};
+}
+;
