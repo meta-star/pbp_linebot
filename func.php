@@ -5,7 +5,7 @@ PB Project Demo - LINEBOT
 (c) 2020 SuperSonic(https://github.com/supersonictw)
  */
 
-$analytics_host = "https://project.starinc.xyz/pbp/api.php";
+$analytics_host = "https://project.starinc.xyz/pbp/api";
 
 function analytics_connect($data, $json_decode = 0)
 {
@@ -37,5 +37,26 @@ function analytics_connect($data, $json_decode = 0)
 
         default:
             return $result;
+    }
+}
+
+function analytics($message_text)
+{
+    preg_match_all(
+        '#\bhttps?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/))#',
+        $message_text,
+        $match
+    );
+    $queue = json_encode($match);
+    $result = analytics_connect();
+    if (is_null($result)) {
+        error_log("PBP_A Server HandShaking Error");
+        return false;
+    } else {
+        if ($result["status"] === 200) {
+            return false;
+        } else {
+            return "Warning";
+        }
     }
 }

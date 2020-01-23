@@ -17,10 +17,13 @@ foreach ($client->parseEvents() as $event) {
             $message = $event['message'];
             switch ($message['type']) {
                 case 'text':
-                    $client->replyMessage($event['replyToken'], $msgobj->Text($message['text']));
-                    break;
-                default:
-                    error_log("Unsupporeted message type: " . $message['type']);
+                    $result = analytics($message['text']);
+                    if ($result) {
+                        $client->replyMessage(
+                            $event['replyToken'],
+                            $msgobj->Text($result)
+                        );
+                    }
                     break;
             }
             break;
