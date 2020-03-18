@@ -3,7 +3,7 @@
 PB Project Demo - LINEBOT
 :license MPL 2.0
 (c) 2020 SuperSonic(https://github.com/supersonictw)
- */
+*/
 
 function error_report($data)
 {
@@ -50,7 +50,7 @@ function analytics($message_text)
 {
     preg_match_all(
         '#\bhttps?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/))#',
-        $message_text,
+        strtolower($message_text),
         $match
     );
     if (count($match) < 2 or empty($match[0])) {
