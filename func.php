@@ -5,6 +5,13 @@ PB Project Demo - LINEBOT
 (c) 2020 SuperSonic(https://github.com/supersonictw)
  */
 
+function error_report($data)
+{
+    $content = "PB Project Demo - LINEBOT\nError:\n%s";
+    error_log($data);
+    return sprintf($content, $data);
+}
+
 function analytics_connect($data, $json_decode = 0)
 {
     $data_string = json_encode($data);
@@ -53,13 +60,16 @@ function analytics($message_text)
             "url" => $url,
         ], 1);
         if (is_null($result)) {
-            error_log("PBP_A Server HandShaking Error");
-            return "Error";
+            $msg = "PBP_A Server HandShaking Error";
+            return error_report($msg);
         } else {
             if ($result["status"] === 200) {
                 if (array_key_exists("trust-score", $result) and $result["trust-score"] < 0.5) {
                     return "Warning";
                 }
+            } else {
+                $msg = sprintf("PBP_A Server\nStatus: %s", $result["status"]);
+                return error_report($msg);
             }
         }
 
