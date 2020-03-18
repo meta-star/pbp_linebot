@@ -5,11 +5,10 @@ PB Project Demo - LINEBOT
 (c) 2020 SuperSonic(https://github.com/supersonictw)
  */
 
-$analytics_host = "https://client.starinc.xyz/pbp";
-
 function analytics_connect($data, $json_decode = 0)
 {
     $data_string = json_encode($data);
+    $analytics_host = "https://client.starinc.xyz/pbp";
 
     $client = curl_init();
     curl_setopt($client, CURLOPT_POST, true);
