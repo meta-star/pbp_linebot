@@ -53,8 +53,10 @@ function analytics($message_text)
         $message_text,
         $match
     );
-    $urls = $match[0];
-    foreach ($urls as $url) {
+    if (count($match) <= 1) {
+        return false;
+    }
+    foreach ($match[0] as $url) {
         $result = analytics_connect([
             "version" => 1,
             "url" => $url,
@@ -72,7 +74,6 @@ function analytics($message_text)
                 return error_report($msg);
             }
         }
-
     }
     return "Safe";
 }
