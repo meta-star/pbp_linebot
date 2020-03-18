@@ -57,21 +57,23 @@ function analytics($message_text)
         return false;
     }
     foreach ($match[0] as $url) {
-        $result = analytics_connect([
-            "version" => 1,
-            "url" => $url,
-        ], 1);
-        if (is_null($result)) {
-            $msg = "PBP_A Server HandShaking Error";
-            return error_report($msg);
-        } else {
-            if ($result["status"] === 200) {
-                if (array_key_exists("trust-score", $result) and $result["trust-score"] < 0.5) {
-                    return "Warning";
-                }
-            } else {
-                $msg = sprintf("PBP_A Server\nStatus: %s", $result["status"]);
+        if (filter_var($url, FILTER_VALIDATE_URL)) {
+            $result = analytics_connect([
+                "version" => 1,
+                "url" => $url,
+            ], 1);
+            if (is_null($result)) {
+                $msg = "PBP_A Server HandShaking Error";
                 return error_report($msg);
+            } else {
+                if ($result["status"] === 200) {
+                    if (array_key_exists("trust-score", $result) and $result["trust-score"] < 0.5) {
+                        return "Warning";
+                    }
+                } else {
+                    $msg = sprintf("PBP_A Server\nStatus: %s", $result["status"]);
+                    return error_report($msg);
+                }
             }
         }
     }
