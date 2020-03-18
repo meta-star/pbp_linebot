@@ -50,7 +50,7 @@ function analytics($message_text)
         $queue = json_encode($match);
         $result = analytics_connect([
             "url" => $url,
-        ]);
+        ], 1);
         if (is_null($result)) {
             error_log("PBP_A Server HandShaking Error");
         } else {
