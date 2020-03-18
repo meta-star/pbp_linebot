@@ -55,7 +55,7 @@ function analytics($message_text)
             return "Error";
         } else {
             if ($result["status"] === 200) {
-                if (array_key_exists("trust-core", $result) and $result["trust-core"] < 0.5) {
+                if (array_key_exists("trust-score", $result) and $result["trust-score"] < 0.5) {
                     return "Warning";
                 }
             }
