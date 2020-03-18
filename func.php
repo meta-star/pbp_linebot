@@ -5,7 +5,7 @@ PB Project Demo - LINEBOT
 (c) 2020 SuperSonic(https://github.com/supersonictw)
  */
 
-$analytics_host = "https://project.starinc.xyz/pbp/api";
+$analytics_host = "https://client.starinc.xyz/pbp";
 
 function analytics_connect($data, $json_decode = 0)
 {
@@ -54,9 +54,12 @@ function analytics($message_text)
         return false;
     } else {
         if ($result["status"] === 200) {
+            if(array_key_exists("trust-core", $result) and $result["trust-core"] < 0.5) {
+                return "Warning";
+            }
             return false;
         } else {
-            return "Warning";
+            return false;
         }
     }
 }
