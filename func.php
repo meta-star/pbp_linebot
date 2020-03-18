@@ -47,19 +47,20 @@ function analytics($message_text)
         $message_text,
         $match
     );
-    $queue = json_encode($match);
-    $result = analytics_connect();
-    if (is_null($result)) {
-        error_log("PBP_A Server HandShaking Error");
-        return false;
-    } else {
-        if ($result["status"] === 200) {
-            if(array_key_exists("trust-core", $result) and $result["trust-core"] < 0.5) {
-                return "Warning";
-            }
-            return false;
+    foreach ($match as $url) {
+        $queue = json_encode($match);
+        $result = analytics_connect([
+            "url" => $url,
+        ]);
+        if (is_null($result)) {
+            error_log("PBP_A Server HandShaking Error");
         } else {
-            return false;
+            if ($result["status"] === 200) {
+                if (array_key_exists("trust-core", $result) and $result["trust-core"] < 0.5) {
+                    return "Warning";
+                }
+            }
         }
     }
+    return false;
 }
