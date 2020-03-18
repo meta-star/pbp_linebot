@@ -48,6 +48,7 @@ function analytics($message_text)
     );
     foreach ($match as $url) {
         $result = analytics_connect([
+            "version" => 1,
             "url" => $url,
         ], 1);
         if (is_null($result)) {
