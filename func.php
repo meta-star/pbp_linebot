@@ -53,7 +53,7 @@ function analytics($message_text)
         $message_text,
         $match
     );
-    if (count($match) <= 1) {
+    if (count($match) < 2 or empty($match[0])) {
         return false;
     }
     foreach ($match[0] as $url) {
