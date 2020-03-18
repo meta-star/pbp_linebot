@@ -47,12 +47,12 @@ function analytics($message_text)
         $match
     );
     foreach ($match as $url) {
-        $queue = json_encode($match);
         $result = analytics_connect([
             "url" => $url,
         ], 1);
         if (is_null($result)) {
             error_log("PBP_A Server HandShaking Error");
+            return "Error";
         } else {
             if ($result["status"] === 200) {
                 if (array_key_exists("trust-core", $result) and $result["trust-core"] < 0.5) {
@@ -61,5 +61,5 @@ function analytics($message_text)
             }
         }
     }
-    return false;
+    return "Safe";
 }
