@@ -12,7 +12,7 @@ function error_report($data)
     return sprintf($content, $data);
 }
 
-function analytics_connect($data, $json_decode = 0)
+function analytics_connect($data)
 {
     $data_string = json_encode($data);
     $analytics_host = "https://client.starinc.xyz/pbp";
@@ -34,16 +34,7 @@ function analytics_connect($data, $json_decode = 0)
     $result = curl_exec($client);
     curl_close($client);
 
-    switch ($json_decode) {
-        case 0:
-            return json_decode($result);
-
-        case 1:
-            return json_decode($result, true);
-
-        default:
-            return $result;
-    }
+    return json_decode($result);
 }
 
 function analytics($message_text)
@@ -61,17 +52,17 @@ function analytics($message_text)
             $result = analytics_connect([
                 "version" => 1,
                 "url" => $url,
-            ], 1);
+            ]);
             if (is_null($result)) {
                 $msg = "PBP_A Server HandShaking Error";
                 return error_report($msg);
             } else {
-                if ($result["status"] === 200) {
-                    if (array_key_exists("trust-score", $result) and $result["trust-score"] < 0.5) {
-                        return "Warning";
+                if ($result->status === 200) {
+                    if (isset($result->trust_score) and $result->trust_score < 0.5) {
+                        return "Warning!\nThe url(s) in the message might be dangerous.";
                     }
                 } else {
-                    $msg = sprintf("PBP_A Server\nStatus: %s", $result["status"]);
+                    $msg = sprintf("PBP_A Server\nStatus: %s", $result->status);
                     return error_report($msg);
                 }
             }
