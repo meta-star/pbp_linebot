@@ -6,7 +6,7 @@ PB Project Demo - LINEBOT
 */
 
 require_once 'api/api.php';
-require_once 'func.php';
+require_once 'functions.php';
 include 'set.php';
 
 $client = new LINEAPI($channelAccessToken, $channelSecret);

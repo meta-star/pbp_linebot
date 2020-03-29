@@ -59,7 +59,7 @@ function analytics($message_text)
             } else {
                 if ($result->status === 200) {
                     if (isset($result->trust_score) and $result->trust_score < 0.5) {
-                        return "Warning!\nThe url(s) in the message might be dangerous.";
+                        return "Warning!\nThe URL(s) in the message might be dangerous.";
                     }
                 } else {
                     $msg = sprintf("PBP_A Server\nStatus: %s", $result->status);
