@@ -58,7 +58,7 @@ function analytics($message_text)
                 return error_report($msg);
             } else {
                 if ($result->status === 200) {
-                    if (isset($result->trust_score) and $result->trust_score < 0.5) {
+                    if (isset($result->trust_score) and $result->trust_score < 0.6) {
                         return "Warning!\nThe URL(s) in the message might be dangerous.";
                     }
                 } else {
