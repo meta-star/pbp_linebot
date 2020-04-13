@@ -3,7 +3,7 @@
 PB Project Demo - LINEBOT
 :license MPL 2.0
 (c) 2020 SuperSonic(https://github.com/supersonictw)
-*/
+ */
 
 function error_report($data)
 {
@@ -40,7 +40,7 @@ function analytics_connect($data)
 function analytics($message_text)
 {
     preg_match_all(
-        "#(?i)\b((?:[a-z][\w-]+:(?:/{1,3}|[a-z0-9%])|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'\".,<>?«»“”‘’]))#", 
+        "#(?i)\b((?:[a-z][\w-]+:(?:/{1,3}|[a-z0-9%])|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'\".,<>?«»“”‘’]))#",
         strtolower($message_text),
         $match
     );
@@ -57,9 +57,13 @@ function analytics($message_text)
                 $msg = "PBP_A Server HandShaking Error";
                 return error_report($msg);
             } else {
-                if ($result->status === 200) {
-                    if (isset($result->trust_score) and $result->trust_score < 0.6) {
-                        return "Warning!\nThe URL(s) in the message might be dangerous.";
+                if ($result->status === 200 and isset($result->trust_score)) {
+                    if ($result->trust_score < 0.5) {
+                        return "Warning!\nThe URL(s) was marked as blacklist in PBP Network.";
+                    } elseif ($result->trust_score == 0.5) {
+                        return "Notification\nThe URL(s) has/have been scanned and reported as warning target.\nCheck it is safe or not before click in.";
+                    } elseif ($result->trust_score < 1) {
+                        return "Notification\nThe URL(s) was noticed by PBP Network, but we don't known what happened.";
                     }
                 } else {
                     $msg = sprintf("PBP_A Server\nStatus: %s", $result->status);
