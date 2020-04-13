@@ -5,22 +5,22 @@ PB Project Demo - LINEBOT
 (c) 2020 SuperSonic(https://github.com/supersonictw)
 */
 
-require_once 'api/api.php';
-require_once 'functions.php';
-include 'set.php';
+require_once "api/api.php";
+require_once "functions.php";
+include_once "config.php";
 
 $client = new LINEAPI($channelAccessToken, $channelSecret);
 $msgobj = new LINEMSG();
 foreach ($client->parseEvents() as $event) {
-    switch ($event['type']) {
-        case 'message':
-            $message = $event['message'];
-            switch ($message['type']) {
-                case 'text':
-                    $result = analytics($message['text']);
+    switch ($event["type"]) {
+        case "message":
+            $message = $event["message"];
+            switch ($message["type"]) {
+                case "text":
+                    $result = analytics($message["text"]);
                     if ($result) {
                         $client->replyMessage(
-                            $event['replyToken'],
+                            $event["replyToken"],
                             $msgobj->Text($result)
                         );
                     }

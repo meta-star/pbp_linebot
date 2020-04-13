@@ -3,7 +3,7 @@
 PB Project Demo - LINEBOT
 :license MPL 2.0
 (c) 2020 SuperSonic(https://github.com/supersonictw)
- */
+*/
 
 function error_report($data)
 {
@@ -14,8 +14,8 @@ function error_report($data)
 
 function analytics_connect($data)
 {
+    include_once "config.php";
     $data_string = json_encode($data);
-    $analytics_host = "https://client.starinc.xyz/pbp";
 
     $client = curl_init();
     curl_setopt($client, CURLOPT_POST, true);
@@ -27,8 +27,8 @@ function analytics_connect($data)
         $client,
         CURLOPT_HTTPHEADER,
         array(
-            'Content-Type: application/json',
-            'Content-Length: ' . strlen($data_string),
+            "Content-Type: application/json",
+            "Content-Length: " . strlen($data_string),
         )
     );
     $result = curl_exec($client);
@@ -59,7 +59,7 @@ function analytics($message_text)
             } else {
                 if ($result->status === 200 and isset($result->trust_score)) {
                     if ($result->trust_score < 0.5) {
-                        return "Warning!\nThe URL(s) was marked as blacklist in PBP Network.";
+                        return "Warning!\nThe URL(s) was marked as blacklist by PBP Network.";
                     } elseif ($result->trust_score == 0.5) {
                         return "Notification\nThe URL(s) has/have been scanned and reported as warning target.\nCheck it is safe or not before click in.";
                     } elseif ($result->trust_score < 1) {

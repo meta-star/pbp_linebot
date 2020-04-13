@@ -5,5 +5,7 @@ PB Project Demo - LINEBOT
 (c) 2020 SuperSonic(https://github.com/supersonictw)
 */
 
+$analytics_host = 'https://client.starinc.xyz/pbp';
+
 $channelSecret = '';
 $channelAccessToken = '';
