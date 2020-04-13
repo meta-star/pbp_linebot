@@ -3,7 +3,7 @@
 PB Project Demo - LINEBOT
 :license MPL 2.0
 (c) 2020 SuperSonic(https://github.com/supersonictw)
- */
+*/
 
 function error_report($data)
 {
@@ -65,7 +65,7 @@ function analytics($message_text)
                     } elseif ($result->trust_score < 1) {
                         return "[Notification]\nThe URL(s) was noticed by PBP Network, but we don't known what happened.";
                     }
-                } elseif ($result->status === 403 or $result->status === 405) {
+                } elseif ($result->status === 403 or $result->status === 404) {
                     return "[Notification]\nPBP_A couldn't visit the URL(s).";
                 } else {
                     $msg = sprintf("PBP_A Server\nStatus: %s", $result->status);
