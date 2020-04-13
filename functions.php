@@ -14,7 +14,7 @@ function error_report($data)
 
 function analytics_connect($data)
 {
-    include_once "config.php";
+    global $analytics_host;
     $data_string = json_encode($data);
 
     $client = curl_init();

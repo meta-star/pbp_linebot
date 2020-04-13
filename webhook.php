@@ -5,9 +5,9 @@ PB Project Demo - LINEBOT
 (c) 2020 SuperSonic(https://github.com/supersonictw)
 */
 
+include_once "config.php";
 require_once "api/api.php";
 require_once "functions.php";
-include_once "config.php";
 
 $client = new LINEAPI($channelAccessToken, $channelSecret);
 $msgobj = new LINEMSG();
