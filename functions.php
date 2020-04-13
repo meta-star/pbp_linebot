@@ -3,7 +3,7 @@
 PB Project Demo - LINEBOT
 :license MPL 2.0
 (c) 2020 SuperSonic(https://github.com/supersonictw)
-*/
+ */
 
 function error_report($data)
 {
@@ -59,12 +59,14 @@ function analytics($message_text)
             } else {
                 if ($result->status === 200 and isset($result->trust_score)) {
                     if ($result->trust_score < 0.5) {
-                        return "Warning!\nThe URL(s) was marked as blacklist by PBP Network.";
+                        return "[Warning]\nThe URL(s) was marked as blacklist by PBP Network.";
                     } elseif ($result->trust_score == 0.5) {
-                        return "Notification\nThe URL(s) has/have been scanned and reported as warning target.\nCheck it is safe or not before click in.";
+                        return "[Notification]\nThe URL(s) has/have been scanned and reported as warning target.\nCheck it is safe or not before click in.";
                     } elseif ($result->trust_score < 1) {
-                        return "Notification\nThe URL(s) was noticed by PBP Network, but we don't known what happened.";
+                        return "[Notification]\nThe URL(s) was noticed by PBP Network, but we don't known what happened.";
                     }
+                } elseif ($result->status === 403 or $result->status === 405) {
+                    return "[Notification]\nPBP_A couldn't visit the URL(s).";
                 } else {
                     $msg = sprintf("PBP_A Server\nStatus: %s", $result->status);
                     return error_report($msg);
