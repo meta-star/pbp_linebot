@@ -56,33 +56,32 @@ function analytics($message_text)
             if (is_null($result)) {
                 $msg = "PBP_A Server HandShaking Error";
                 return error_report($msg);
-            } else {
-                switch ($result->status) {
-                    case 200:
-                        if ($result->trust_score < 0.5) {
-                            return "[Warning]
+            }
+            switch ($result->status) {
+                case 200:
+                    if ($result->trust_score < 0.5) {
+                        return "[Warning]
                             The URL(s) was marked as blacklist by PBP Network.";
-                        } elseif ($result->trust_score == 0.5) {
-                            return "[Notification]
+                    } elseif ($result->trust_score == 0.5) {
+                        return "[Notification]
                             The URL(s) has/have been scanned and reported as warning target.
                             Check it is safe or not before click in.";
-                        } elseif ($result->trust_score < 1) {
-                            return "[Notification]
+                    } elseif ($result->trust_score < 1) {
+                        return "[Notification]
                             The URL(s) was noticed by PBP Network, but we don't known what happened.";
-                        }
-                        return "Safe";
+                    }
+                    return "Safe";
 
-                    case 401:
-                        return false;
+                case 401:
+                    return false;
 
-                    case 403:
-                    case 404:
-                        return "[Notification]\nPBP_A couldn't visit the URL(s).";
+                case 403:
+                case 404:
+                    return "[Notification]\nPBP_A couldn't visit the URL(s).";
 
-                    default:
-                        $msg = sprintf("PBP_A Server\nStatus: %s", $result->status);
-                        return error_report($msg);
-                }
+                default:
+                    $msg = sprintf("PBP_A Server\nStatus: %s", $result->status);
+                    return error_report($msg);
             }
         }
     }
