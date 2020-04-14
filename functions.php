@@ -70,7 +70,7 @@ function analytics($message_text)
                             return "[Notification]
                             The URL(s) was noticed by PBP Network, but we don't known what happened.";
                         }
-                        return false;
+                        return "Safe";
 
                     case 401:
                         return false;
@@ -86,5 +86,4 @@ function analytics($message_text)
             }
         }
     }
-    return "Safe";
 }
