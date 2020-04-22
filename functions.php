@@ -70,6 +70,7 @@ function analytics($message_text)
                     array_push($results, 100);
 
                 default:
+                    array_push($results, 200);
                     $msg = sprintf("PBP_A Return An Unknown StatusCode: %s", $result->status);
                     $ext_msg .= "\n\n[Debug]\n".error_report($msg);
             }
