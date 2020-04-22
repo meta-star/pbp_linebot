@@ -3,7 +3,7 @@
 PB Project Demo - LINEBOT
 :license MPL 2.0
 (c) 2020 SuperSonic(https://github.com/supersonictw)
-*/
+ */
 
 function error_report($data)
 {
@@ -47,6 +47,10 @@ function analytics($message_text)
     if (count($match) < 2 or empty($match[0])) {
         return false;
     }
+
+    $results = array();
+    $ext_msg = "";
+
     foreach ($match[0] as $url) {
         if (filter_var($url, FILTER_VALIDATE_URL)) {
             $result = analytics_connect([
@@ -54,35 +58,37 @@ function analytics($message_text)
                 "url" => $url,
             ]);
             if (is_null($result)) {
-                $msg = "PBP_A Server HandShaking Error";
+                $msg = "Couldn't handshake to PBP_A";
                 return error_report($msg);
             }
             switch ($result->status) {
                 case 200:
-                    if ($result->trust_score < 0.5) {
-                        return "[Warning]
-                            The URL(s) was marked as blacklist by PBP Network.";
-                    } elseif ($result->trust_score == 0.5) {
-                        return "[Notification]
-                            The URL(s) has/have been scanned and reported as warning target.
-                            Check it is safe or not before click in.";
-                    } elseif ($result->trust_score < 1) {
-                        return "[Notification]
-                            The URL(s) was noticed by PBP Network, but we don't known what happened.";
-                    }
-                    return "Safe";
-
-                case 401:
-                    return false;
+                    array_push($results, $result->trust_score);
 
                 case 403:
                 case 404:
-                    return "[Notification]\nPBP_A couldn't visit the URL(s).";
+                    array_push($results, 100);
 
                 default:
-                    $msg = sprintf("PBP_A Server\nStatus: %s", $result->status);
-                    return error_report($msg);
+                    $msg = sprintf("PBP_A Return An Unknown StatusCode: %s", $result->status);
+                    $ext_msg .= "\n\n[Debug]\n".error_report($msg);
             }
         }
+    }
+
+    if (in_array(100, $results)) {
+        $ext_msg .= "\n\n[Notification]\nPBP_A couldn't visit some URL(s).";
+    }
+
+    if (min($results) < 0.5) {
+        return "[Warning]
+                    The URL(s) was marked as blacklist by PBP Network." . $ext_msg;
+    } elseif (min($results) == 0.5) {
+        return "[Notification]
+                    The URL(s) has/have been scanned and reported as warning target.
+                    Check it is safe or not before click in." . $ext_msg;
+    } elseif (min($results) < 1) {
+        return "[Notification]
+                    The URL(s) was noticed by PBP Network, but we don't known what happened." . $ext_msg;
     }
 }
