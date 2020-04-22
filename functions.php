@@ -90,5 +90,8 @@ function analytics($message_text)
     } elseif (min($results) < 1) {
         return "[Notification]
                     The URL(s) was noticed by PBP Network, but we don't known what happened." . $ext_msg;
+    } elseif (min($results) == 1) {
+        return "[Safe]
+                    The URL(s) was passed scans." . $ext_msg;
     }
 }
