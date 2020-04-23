@@ -64,10 +64,12 @@ function analytics($message_text)
             switch ($result->status) {
                 case 200:
                     array_push($results, $result->trust_score);
+                    break;
 
                 case 403:
                 case 404:
                     array_push($results, 100);
+                    break;
 
                 default:
                     array_push($results, 200);
