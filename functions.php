@@ -91,7 +91,7 @@ function analytics($message_text)
                     The URL(s) has/have been scanned and reported as warning target.
                     Check it is safe or not before click in." . $ext_msg;
     } elseif (min($results) < 1) {
-        return "[Notification]
+        return "[Unknown]
                     The URL(s) was noticed by PBP Network, but we don't known what happened." . $ext_msg;
     } elseif (min($results) == 1) {
         return "[Safe]
