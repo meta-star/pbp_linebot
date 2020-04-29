@@ -3,7 +3,9 @@
 PB Project Demo - LINEBOT
 :license MPL 2.0
 (c) 2020 SuperSonic(https://github.com/supersonictw)
- */
+*/
+
+require_once "normalize-url/normalize-url.php";
 
 function error_report($data)
 {
@@ -51,7 +53,8 @@ function analytics($message_text)
     $results = array();
     $ext_msg = "";
 
-    foreach ($match[0] as $url) {
+    foreach ($match[0] as $origin_url) {
+        $url = normalizeUrl($origin_url);
         if (filter_var($url, FILTER_VALIDATE_URL)) {
             $result = analytics_connect([
                 "version" => 1,
@@ -74,7 +77,7 @@ function analytics($message_text)
                 default:
                     array_push($results, 200);
                     $msg = sprintf("PBP_A Return An Unknown StatusCode: %s", $result->status);
-                    $ext_msg .= "\n\n[Debug]\n".error_report($msg);
+                    $ext_msg .= "\n\n[Debug]\n" . error_report($msg);
             }
         }
     }
