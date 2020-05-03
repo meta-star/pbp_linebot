@@ -4,7 +4,7 @@ An example for Phishing Blocker Project.
 
 Installation:
   git clone --recursive https://github.com/star-inc/PBP_Demo-LINEBOT.git
-  Create "config.php" and config for connecting your LINE API Service
+  Create "config.php" and config it for connecting LINE API Service
 
 LICENSE: Mozilla Public License Version 2.0
 
