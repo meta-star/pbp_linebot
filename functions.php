@@ -88,16 +88,16 @@ function analytics($message_text)
 
     if (min($results) < 0.5) {
         return "[Warning]\n" .
-            "The URL(s) was marked as blacklist by PBP Network." . $ext_msg;
+            "The URL(s) was marked in blacklist by PBP Network." . $ext_msg;
     } elseif (min($results) == 0.5) {
         return "[Notification]\n" .
-            "The URL(s) has/have been scanned and reported as warning target.\n" .
-            "Check it is safe or not before click in." . $ext_msg;
+            "The URL(s) has/have been scanned and reported as a warning target.\n" .
+            "Check it is safe or not before click on." . $ext_msg;
     } elseif (min($results) < 1) {
         return "[Unknown]\n" .
             "The URL(s) was noticed by PBP Network, but we don't known what happened." . $ext_msg;
     } elseif (min($results) == 1) {
         return "[Safe]\n" .
-            "The URL(s) was passed scans." . $ext_msg;
+            "The URL(s) was passed the scans." . $ext_msg;
     }
 }
