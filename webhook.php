@@ -27,5 +27,11 @@ foreach ($client->parseEvents() as $event) {
                     break;
             }
             break;
+        case "join":
+        case "follow":
+            $client->replyMessage(
+                $event["replyToken"],
+                $msgobj->Text("I will scan all URLs for protecting your Internet Security.")
+            );
     }
 }
