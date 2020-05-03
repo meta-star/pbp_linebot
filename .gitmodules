@@ -3,4 +3,4 @@
 	url = https://github.com/supersonictw/line-bot-sdk-php-tiny.git
 [submodule "normalize-url"]
 	path = normalize-url
-	url = https://gist.github.com/60519fd5b6b26fe928cc.git
+	url = https://gist.github.com/ae583e26fc1c9dea03403463323b7960.git
