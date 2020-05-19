@@ -3,7 +3,7 @@
 PB Project Demo - LINEBOT
 :license MPL 2.0
 (c) 2020 SuperSonic(https://github.com/supersonictw)
- */
+*/
 
 require_once "normalize-url/normalize-url.php";
 
@@ -91,13 +91,13 @@ function analytics($message_text)
             "The URL(s) was marked in blacklist by PBP Network." . $ext_msg;
     } elseif (min($results) == 0.5) {
         return "[Notification]\n" .
-            "The URL(s) has/have been scanned and reported as a warning target.\n" .
+            "The URL(s) has been scanned and reported as a warning target.\n" .
             "Check it is safe or not before click on." . $ext_msg;
     } elseif (min($results) < 1) {
         return "[Unknown]\n" .
             "The URL(s) was noticed by PBP Network, but we don't known what happened." . $ext_msg;
     } elseif (min($results) == 1) {
         return "[Safe]\n" .
-            "The URL(s) was passed the scan." . $ext_msg;
+            "The URL(s) has passed the scan." . $ext_msg;
     }
 }
