@@ -98,6 +98,6 @@ function analytics($message_text)
             "The URL(s) was noticed by PBP Network, but we don't known what happened." . $ext_msg;
     } elseif (min($results) == 1) {
         return "[Safe]\n" .
-            "The URL(s) was passed the scans." . $ext_msg;
+            "The URL(s) was passed the scan." . $ext_msg;
     }
 }
