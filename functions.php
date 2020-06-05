@@ -72,6 +72,9 @@ function analytics($message_text)
                 case 403:
                 case 404:
                     array_push($results, 100);
+                    $url_params = parse_url($url);
+                    $report_url = $url_params["scheme"] . ":\\\\" . $url_params["host"] . ($url_params["path"] ? "\\..." : "\\") . " (striped)";
+                    $ext_msg .= "\n\n[Notification]\nPBP_A couldn't visit $report_url.";
                     break;
 
                 default:
@@ -82,8 +85,10 @@ function analytics($message_text)
         }
     }
 
-    if (in_array(100, $results)) {
-        $ext_msg .= "\n\n[Notification]\nPBP_A couldn't visit some URL(s).";
+    if (in_array(100, $results) or in_array(200, $results)) {
+        if (count($results) == 1) {
+            return ltrim($ext_msg);
+        }
     }
 
     if (min($results) < 0.5) {
