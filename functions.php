@@ -86,7 +86,7 @@ function analytics($message_text)
     }
 
     if (in_array(100, $results) or in_array(200, $results)) {
-        if (count($results) == 1 or min($result) >= 100) {
+        if (count($results) == 1 or min($results) >= 100) {
             return ltrim($ext_msg);
         }
     }
